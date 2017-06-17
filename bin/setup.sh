@@ -1,7 +1,9 @@
-echo "creating network"
+echo "Creating Network ########################################################"
 docker network create --subnet=192.168.27.1/28 ansible
 
-echo "creating servers"
+echo ""
+
+echo "Creating Servers ########################################################"
 for i in 1 2 3
 do
 docker run -d \
@@ -15,7 +17,9 @@ docker run -d \
   jdeathe/centos-ssh:centos-7
 done
 
-echo "creating control node"
+echo ""
+
+echo "Creating Control Node ###################################################"
 docker build -t ansible-control-node .
 
 docker run -dt \

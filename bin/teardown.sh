@@ -1,11 +1,15 @@
-echo "remove servers"
+echo "Removing Servers ########################################################"
 for i in 1 2 3
 do
   docker rm -f centos-server-$i
 done
 
-echo "remove control node"
+echo ""
+
+echo "Remove Control Node #####################################################"
 docker rm -f ansible-control
 
-echo "remove network"
+echo ""
+
+echo "Remove Network ##########################################################"
 docker network rm ansible
