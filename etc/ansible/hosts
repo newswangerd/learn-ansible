@@ -1,0 +1,8 @@
+# centos server 1
+192.168.27.3 ansible_user=app-admin ansible_ssh_private_key_file=/root/id_rsa
+
+# centos server 2
+192.168.27.4 ansible_user=app-admin ansible_ssh_private_key_file=/root/id_rsa
+
+# centos server 3
+192.168.27.5 ansible_user=app-admin ansible_ssh_private_key_file=/root/id_rsa
