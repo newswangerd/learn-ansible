@@ -1,3 +1,6 @@
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo $DIR
+
 echo "Creating Network ########################################################"
 docker network create --subnet=192.168.27.1/28 ansible
 
@@ -26,5 +29,5 @@ docker run -dt \
   --name ansible-control \
   --net ansible \
   --ip 192.168.27.2 \
-  -v $(pwd)/../etc/ansible:/etc/ansible \
+  -v $DIR/../etc/ansible:/etc/ansible \
   newswangerd/ansible-control bash
