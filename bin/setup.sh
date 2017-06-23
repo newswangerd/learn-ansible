@@ -20,11 +20,11 @@ done
 echo ""
 
 echo "Creating Control Node ###################################################"
-docker build -t ansible-control-node .
+# docker build -t ansible-control-node .
 
 docker run -dt \
   --name ansible-control \
   --net ansible \
   --ip 192.168.27.2 \
-  -v $(pwd)/etc/ansible:/etc/ansible \
-  ansible-control-node bash
+  -v $(pwd)/../etc/ansible:/etc/ansible \
+  newswangerd/ansible-control bash
