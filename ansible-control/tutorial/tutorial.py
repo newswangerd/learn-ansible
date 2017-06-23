@@ -33,11 +33,11 @@ class Tutorial:
 
     def get_current_step(self, offset=0):
         if self.step + offset < 0:
-            return {'desc': 'You have just started the %s lesson.' % self.lesson['title']}
+            return {'task': 'You have just started the %s lesson.' % self.lesson['title']}
 
         if self.step + offset > len(self.lesson['steps']) - 1:
             self.step -= 1
-            return {'desc': 'You just finished the %s lesson.' % self.lesson['title']}
+            return {'task': 'You just finished the %s lesson.' % self.lesson['title']}
 
         return self.lesson['steps'][self.step + offset]
 
@@ -47,7 +47,7 @@ class Tutorial:
 def next_i(args, tut):
     tut.print_progress()
     result = tut.get_current_step()
-    print(result['desc'])
+    print(result['task'])
     do_step = True
     if ('validator' in result):
         validator = eval(tut.lesson_key)()
@@ -59,7 +59,7 @@ def next_i(args, tut):
 
 def repeat_i(args, tut):
     tut.print_progress()
-    print (tut.get_current_step(offset=-1)['desc'])
+    print (tut.get_current_step(offset=-1)['task'])
 
 
 def show_lessons(args, tut):

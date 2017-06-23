@@ -2,26 +2,24 @@
 title: Introduction
 description: Introduces the basics of the Learn Ansible tutorial and the ansible command.
 steps:
-  - desc:
-      Welcome to Learn Ansible.
+  - task: |
+      Welcome to Quckstart Ansible Tutorial.
       This will give you a quick intro to how this command program works.
 
       In order to advance to the next step in the tutorial use type the command 'tutorial' or 'tutorial next' into your shell.
 
-  - desc: |
+  - task: |
       That will advance you to the next step in the tutorial. If you need to see the text for the current step you are on you can use the 'tutorial repeat' command.
 
       To see the list of available lessons use 'tutorial lessons'.
       You can switch to another lesson using 'tutorial set-lesson LESSON_NAME'.
 
-
-  - desc: |
+  - task: |
       The first thing you need to do is ensure that ansible is working correctly. Try running the command:
 
       'ansible all -m ping'
 
-
-  - desc: |
+  - task: |
       You should see the following message:
 
       192.168.27.4 | SUCCESS => {
@@ -39,18 +37,47 @@ steps:
 
       This shows that ansible can ping each of the three servers that we have pre-configured for you. If any of these pings fail, there might be a problem with the inventory of hosts.
 
+  - task: |
+      There are two main components in 'ansible all -m ping'. The first, 'all', tells ansible that it needs to run against all of the hosts that are configured on the system. We'll get to the host configuration in a moment. The second piece, '-m ping', tells ansible to run the ping module.
 
-  - desc: |
-      Now, cd to the directory '/etc/ansible'.
+  - task: |
+      Ansible has hundreds of different modules for managing various components on a system. Lets try a more complex one:
 
-      We have set this directory up so that it also availble on your local machine. If you look in the base directory for this ansible-learn, you will see a folder named etc/. Any changes you make in etc/ will be available in the ansible-control docker container and vice versa. This allows you to edit the files contained in /etc/ansible using vim or nano in the ansible-control container or using whichever editor you have installed on your local machine.
+      ansible all -m yum -a "name=epel-release state=present" -b
 
+  - task: |
+      That command attempts to install the epel repository on our three servers. Since epel is already there, Ansible tells us that is it already installed and that nothing on the system has changed. Note, the -b flag tells ansible to become root on the target host.
 
-  - desc: |
+      Now try:
+
+      ansible all -m yum -a "name=sl state=present" -b
+
+      (note, that might take a minute)
+
+  - task: |
+      That command installs sl on each system.
+
+      To verify that sl was installed, login to one of the servers using 'ssh app-admin@192.168.27.3' and run the 'sl' command.
+
+      You can learn more about the yum module and all of the other Ansible modules here: http://docs.ansible.com/ansible/modules_by_category.html
+
+  - task: |
+      Enough about modules for now. Lets take a look at where the hosts are configured.
+
+      Exit the centos server and return to the control node.
+
+      cd to the '/etc/ansible' directory.
+
+  - task: |
+      We have set this directory up so that it also availble on your local machine. If you look in the base directory for ansible-learn, you will see a folder named etc/. Any changes you make in etc/ will be available in the ansible-control docker container and vice versa. This allows you to edit the files contained in /etc/ansible using vim or nano in the ansible-control container or using whichever editor you have installed on your local machine. Any changes made here will be preserved after the docker containers are destroyed.
+
+  - task: |
       Take a look at the 'hosts' file in '/etc/ansible'. This is where the connection information to our simulated servers is stored. This is our inventory of servers. Here we can set any variables that we need about specific hosts as well as group them into arbitrary groups.
 
-  - desc: |
+  - task: |
       Try running 'ansible group2 -m ping'. This time you'll notice that it only pings the servers that are in group2. You can specify any group or individual host using the 'ansible' command.
 
-  - desc: |
-      Take some time to go over the inventory documentation at http://docs.ansible.com/ansible/intro_inventory.html. There you can learn how to specify variables for groups, as well as break the inventory file up into separate YAML files. If you look closesly you'll notice that the ansible_user and ansible_ssh_private_key_file is the same for all three hosts. See if you can create a group var for the container group to specify these variables for all of them at once.
+  - task: |
+      Take some time to go over the inventory documentation at http://docs.ansible.com/ansible/intro_inventory.html. There you can learn how to specify variables for groups, as well as break the inventory file up into separate YAML files. If you look closesly you'll notice that the ansible_user is the same for all three hosts. See if you can create a group variable for the container group to specify these variables for all of them at once.
+
+      The real power of Ansible comes in the form of playbooks. Once you've famiarized yourself with group variables and inventory files, check out the playbooks lesson.
