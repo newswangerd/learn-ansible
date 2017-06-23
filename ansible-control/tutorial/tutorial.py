@@ -36,11 +36,16 @@ class Tutorial:
             return {'desc': 'You have just started the %s lesson.' % self.lesson['title']}
 
         if self.step + offset > len(self.lesson['steps']) - 1:
+            self.step -= 1
             return {'desc': 'You just finished the %s lesson.' % self.lesson['title']}
 
         return self.lesson['steps'][self.step + offset]
 
+    def print_progress(self):
+        print("%s [%i/%i]" % (self.lesson['title'], self.step + 1, len(self.lesson['steps'])))
+
 def next_i(args, tut):
+    tut.print_progress()
     result = tut.get_current_step()
     print(result['desc'])
     do_step = True
@@ -53,6 +58,7 @@ def next_i(args, tut):
         tut.next_step()
 
 def repeat_i(args, tut):
+    tut.print_progress()
     print (tut.get_current_step(offset=-1)['desc'])
 
 
