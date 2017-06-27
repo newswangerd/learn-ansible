@@ -5,14 +5,16 @@ description: Introduces the basics of the Quickstart Ansible tutorial and the an
 steps:
   - task: |
       Welcome to Quckstart Ansible Tutorial.
-      This will give you a quick intro to how this command program works.
+
+      This will give you a quick intro to how this command program works as well as introduce the basics of Ansible.
 
       In order to advance to the next step in the tutorial use type the command 'tutorial' or 'tutorial next' into your shell.
 
   - task: |
-      That will advance you to the next step in the tutorial. If you need to see the text for the current step you are on you can use the 'tutorial repeat' command.
+      The 'tutorial' command advances you to the next step. If you need to see the text for the current step you are on you can use the 'tutorial repeat' command.
 
       To see the list of available lessons use 'tutorial lessons'.
+      
       You can switch to another lesson using 'tutorial set-lesson LESSON_NAME'.
 
   - task: |
