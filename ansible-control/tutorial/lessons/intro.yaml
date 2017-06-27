@@ -14,7 +14,7 @@ steps:
       The 'tutorial' command advances you to the next step. If you need to see the text for the current step you are on you can use the 'tutorial repeat' command.
 
       To see the list of available lessons use 'tutorial lessons'.
-      
+
       You can switch to another lesson using 'tutorial set-lesson LESSON_NAME'.
 
   - task: |
@@ -51,6 +51,8 @@ steps:
   - task: |
       That command attempts to install the epel repository on our three servers. Since epel is already there, Ansible tells us that is it already installed and that nothing on the system has changed. Note, the -b flag tells ansible to become root on the target host.
 
+      Ansible strives to be idempotant which means that if you run the same thing twice (such as install epel), ansible will only actually run the command if something needs to be changed on the system.
+
       Now try:
 
       ansible all -m yum -a "name=sl state=present" -b
@@ -60,6 +62,8 @@ steps:
   - task: |
       That command installs sl on each system.
 
+      Note that this time each server reported that a change happened. Since sl was not previously installed on each of these servers, ansible installed it. If you run that command again, it should tell you that nothing has changed.
+
       To verify that sl was installed, login to one of the servers using 'ssh app-admin@192.168.27.3' and run the 'sl' command.
 
       You can learn more about the yum module and all of the other Ansible modules here: http://docs.ansible.com/ansible/modules_by_category.html
@@ -67,15 +71,21 @@ steps:
   - task: |
       Enough about modules for now. Lets take a look at where the hosts are configured.
 
-      Exit the centos server and return to the control node.
-
       cd to the '/etc/ansible' directory.
 
   - task: |
-      We have set this directory up so that it also availble on your local machine. If you look in the base directory for ansible-learn, you will see a folder named etc/. Any changes you make in etc/ will be available in the ansible-control docker container and vice versa. This allows you to edit the files contained in /etc/ansible using vim or nano in the ansible-control container or using whichever editor you have installed on your local machine. Any changes made here will be preserved after the docker containers are destroyed.
+      We have set this directory up so that it also availble on your local machine. If you look in the base directory for learn-ansible, you will see a folder named etc/. Any changes you make in etc/ will be available in the ansible-control docker container and vice versa. This allows you to edit the files contained in /etc/ansible using vim or nano in the ansible-control container or using whichever editor you have installed on your local machine. Any changes made here will be preserved after the docker containers are destroyed.
 
   - task: |
       Take a look at the 'hosts' file in '/etc/ansible'. This is where the connection information to our simulated servers is stored. This is our inventory of servers. Here we can set any variables that we need about specific hosts as well as group them into arbitrary groups.
+
+  - task: |
+      Lets take a look at the first two lines. Here we are setting an alias of centos1 to the server at 192.168.27.3. We've configured the default login user to be app-admin.
+
+      Since the SSH key for all of our servers is already for the root user under /root/.ssh, we don't need to specify SSH credentials in the inventory.
+
+      # centos server 1
+      centos1 ansible_host=192.168.27.3 ansible_user=app-admin
 
   - task: |
       Try running 'ansible group2 -m ping'. This time you'll notice that it only pings the servers that are in group2. You can specify any group or individual host using the 'ansible' command.
@@ -83,4 +93,6 @@ steps:
   - task: |
       Take some time to go over the inventory documentation at http://docs.ansible.com/ansible/intro_inventory.html. There you can learn how to specify variables for groups, as well as break the inventory file up into separate YAML files. If you look closesly you'll notice that the ansible_user is the same for all three hosts. See if you can create a group variable for the container group to specify these variables for all of them at once.
 
-      The real power of Ansible comes in the form of playbooks. Once you've famiarized yourself with group variables and inventory files, check out the playbooks lesson.
+      The real power of Ansible comes in the form of playbooks. Once you've famiarized yourself with group variables and inventory files, check out the playbooks lesson using:
+
+      tutorial set-lesson playbooks
