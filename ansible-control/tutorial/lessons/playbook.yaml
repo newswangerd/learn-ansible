@@ -1,0 +1,6 @@
+---
+title: Playbooks
+description: Introduces the basics of writing Ansible Playbooks
+steps:
+  - task: |
+      do something

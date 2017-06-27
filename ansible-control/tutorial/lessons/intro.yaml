@@ -1,6 +1,7 @@
 ---
+key: intro
 title: Introduction
-description: Introduces the basics of the Learn Ansible tutorial and the ansible command.
+description: Introduces the basics of the Quickstart Ansible tutorial and the ansible command.
 steps:
   - task: |
       Welcome to Quckstart Ansible Tutorial.
