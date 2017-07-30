@@ -17,10 +17,10 @@ This repo has two primary use cases as:
 4. If you want to use the interactive tutorial enter the `tutorial` command
 
 ## Ansible Tutorial
-Once you are connected to the ansible-control container, start the interactive tutorial by using the `tutorial` command.
+Once you are connected to the ansible-control container, start the interactive tutorial by using the `t` or `tutorial` command.
 
 ## Dev Environment
-The etc/ directory in this project will get mounted into /etc/ansible on the ansible-control container. You can develop your playbooks in etc/ansible using the pre-configured hosts.
+The `ansible/` directory in this project will get mounted into `/etc/ansible` on the ansible-control container. You can develop your playbooks in `ansible/` using the pre-configured hosts.
 
 ## Teardown
 Once you are done using the containers you can remove them by running `./bin/teardown.sh`.

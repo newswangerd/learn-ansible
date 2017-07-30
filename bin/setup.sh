@@ -31,7 +31,7 @@ docker run -dt \
   --name ansible-control \
   --net ansible \
   --ip 192.168.27.2 \
-  -v $DIR/../etc/ansible:/etc/ansible \
+  -v $DIR/../ansible:/etc/ansible \
   --add-host=centos1:192.168.27.3 \
   --add-host=centos2:192.168.27.4 \
   --add-host=centos3:192.168.27.5 \
