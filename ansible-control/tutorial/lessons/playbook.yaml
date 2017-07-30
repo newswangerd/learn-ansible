@@ -1,3 +1,5 @@
+# WIP
+
 ---
 title: Playbooks
 description: Introduces the basics of writing Ansible Playbooks
@@ -16,3 +18,37 @@ steps:
       Playbooks are expressed in YAML format (see YAML Syntax) and have a minimum of syntax, which intentionally tries to not be a programming language or script, but rather a model of a configuration or a process.
 
       Each playbook is composed of one or more ‘plays’ in a list.
+
+  - task: |
+      Navigate to '/etc/ansible/examples' and open up httpd.yaml see example playbook. This particular playbook would be used to download, configure and start Apache on an RHEL/ CentOS server.
+
+  - task: |
+      Now it's time to write your first playbook. Navigate to '/etc/ansible/examples/hello_world'. You are going to deploy a very simple hello world website that is written in Go.
+
+      Open up deploy.yaml. We've outlined what the playbook is going to look like. You will need to complete the following
+
+      1. Install Go. Our website is written in go, so we will need it to compile and launch the code. You can try using the package module for this.
+
+      2. Install supervisord. Since Docker doesn't support upstart or systemd, we have to use supervisor in order to manage our processes. Install this with the package module
+
+      3. Copy site: using the copy module, copy site.go to /opt/site.go
+
+      4. Copy supervisor config. We need to copy our supervisor configuration for the hello world site to the target servers. Copy app.conf to /etc/supervisord.d/app.conf.
+
+      5. Start site. Use the supervisorctl module to set the hello_world process to the 'restarted' state.
+
+      Once you have filled out the blank spots you can run the playbook using 'ansible-playbook deploy.yaml -b' (-b tells ansible to become a priviledged user).
+
+      Once the app is deployed use 'curl centos2' or 'curl centos3' to verify that the site is live.
+
+  - task: |
+      Checking your work...
+
+    validate:
+      name: curl.CurlValidator
+      args:
+        targets:
+          - centos2
+          - centos3
+        contains:
+          - "Hello world!"

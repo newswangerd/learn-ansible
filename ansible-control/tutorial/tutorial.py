@@ -4,7 +4,7 @@ import os
 import sys
 import argparse
 import yaml
-from lib.validators import *
+from lib.validate import validate_task
 
 class Tutorial:
     def __init__(self):
@@ -56,20 +56,18 @@ class Tutorial:
         return lessons
 
 
-def next_i(args, tut):
+def next_task(args, tut):
     tut.print_progress()
     result = tut.get_current_step()
     print(result['task'])
     do_step = True
-    if ('validator' in result):
-        validator = eval(tut.lesson_key)()
-        method = getattr(validator, result['validator'])
-        do_step = method()
+    if ('validate' in result):
+        do_step = validate_task(result['validate']['name'], result['validate']['args'])
 
     if do_step:
         tut.next_step()
 
-def repeat_i(args, tut):
+def repeat_task(args, tut):
     tut.print_progress()
     print (tut.get_current_step(offset=-1)['task'])
 
@@ -100,10 +98,10 @@ def main():
     subparsers = parser.add_subparsers(help="Tutorial options")
 
     p_next = subparsers.add_parser('next', help="Move on to the next step in the tutorial")
-    p_next.set_defaults(func=next_i)
+    p_next.set_defaults(func=next_task)
 
     p_current = subparsers.add_parser('repeat', help="Repeat the previous step")
-    p_current.set_defaults(func=repeat_i)
+    p_current.set_defaults(func=repeat_task)
 
     p_lessons = subparsers.add_parser('lessons', help="Show a list of available lessons")
     p_lessons.set_defaults(func=show_lessons)

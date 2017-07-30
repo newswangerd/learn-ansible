@@ -1,0 +1,17 @@
+---
+- hosts: group2
+  tasks:
+  - name: install go
+    # complete me!
+
+  - name: install supervisord
+    # complete me!
+
+  - name: copy site
+    # complete me!
+
+  - name: copy supervisor config
+    # complete me!
+
+  - name: start site
+    # complete me!

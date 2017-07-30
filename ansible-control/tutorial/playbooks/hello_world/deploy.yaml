@@ -1,0 +1,27 @@
+---
+- hosts: group2
+  tasks:
+  - name: install go
+    package:
+      name: go
+      state: present
+
+  - name: install supervisord
+    package:
+      name: supervisor
+      state: present
+
+  - name: copy site
+    copy:
+      src: site.go
+      dest: /opt/site.go
+
+  - name: copy supervisor config
+    copy:
+      src: app.conf
+      dest: /etc/supervisord.d/app.conf
+
+  - name: start site
+    supervisorctl:
+      name: hello_world
+      state: restarted
