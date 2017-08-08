@@ -11,6 +11,14 @@ This repo has two primary use cases as:
 
 ## Setup
 0. Ensure that you have a version of Docker which supports the `docker network` command. Version 17 and up should work. You can check this with `docker --version`.
+
+If you don't have docker you can install it using:
+```
+curl -fsSL get.docker.com -o get-docker.sh
+sh get-docker.sh
+```
+(see https://github.com/docker/docker-install for details)
+
 1. Clone or download this repo onto your local machine
 2. Run the setup script with `./bin/setup.sh`
 3. Connect to the ansible-control container using `docker exec -it ansible-control bash`
